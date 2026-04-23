@@ -17,6 +17,7 @@
 - [x] 智能选择图表格式（Mermaid / 表格 / ASCII，按场景决定，不强制套用）
 - [x] 每图限制 ≤ 300 token，防止图表失控
 - [x] 输出带版本号的文档，方便人工批注后迭代
+- [x] 输出路径按项目约定解析：prompt 显式指定 → CLAUDE.md 配置 → 交互询问
 - [x] 适用于任意功能域：`skill-agent`、`auth`、`chat-runtime`、`file-storage` 等
 
 ### refine
@@ -57,9 +58,9 @@ cp -r refine ~/.claude/skills/
 ## 使用方式
 
 ```bash
-# 生成架构文档（输出到 tasks/<topic>/research.md）
-arch-doc skill-agent
-arch-doc auth
+# 生成架构文档
+arch-doc skill-agent                   # 不指定路径 → 读 CLAUDE.md 或交互询问
+arch-doc auth doc/arch/               # 显式指定输出目录
 arch-doc chat-runtime
 
 # 处理当前对话中最近文档的批注
@@ -73,7 +74,7 @@ refine .tasks/fix-auth/todo.md
 ### 工作流
 
 ```
-arch-doc <topic>          生成文档，标注 v1 待批注
+arch-doc <topic> [目录]   生成文档，标注 v1 待批注
        ↓
 在文档中写 <!-- 批注 -->
        ↓

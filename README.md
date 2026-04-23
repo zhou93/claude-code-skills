@@ -17,6 +17,7 @@ Analyze any feature domain across all architectural layers and generate a struct
 - [x] Intelligently selects diagram format per context (Mermaid / table / ASCII)
 - [x] Enforces ≤ 300 tokens per diagram to prevent bloat
 - [x] Outputs versioned documents ready for human annotation
+- [x] Output path resolved per project: explicit prompt arg → CLAUDE.md convention → interactive prompt
 - [x] Works on any domain: `skill-agent`, `auth`, `chat-runtime`, `file-storage`, etc.
 
 ### refine
@@ -57,9 +58,9 @@ Restart Claude Code after installation.
 ## Usage
 
 ```bash
-# Generate an architecture document (outputs to tasks/<topic>/research.md)
-arch-doc skill-agent
-arch-doc auth
+# Generate an architecture document
+arch-doc skill-agent                   # no path → reads CLAUDE.md or asks
+arch-doc auth doc/arch/               # explicit output dir
 arch-doc chat-runtime
 
 # Process annotations in the most recently discussed document
@@ -73,7 +74,7 @@ refine .tasks/fix-auth/todo.md
 ### Workflow
 
 ```
-arch-doc <topic>           Generate document, versioned as "v1 draft"
+arch-doc <topic> [dir]     Generate document, versioned as "v1 draft"
        ↓
 Add <!-- annotations --> in the document
        ↓

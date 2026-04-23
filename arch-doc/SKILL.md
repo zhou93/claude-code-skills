@@ -3,9 +3,9 @@ name: arch-doc
 description: >
   Invoke to analyze any feature domain in the codebase and generate a structured
   architecture document (with C4 model, Mermaid diagrams, sequence diagrams, and
-  design pattern annotations). Outputs to tasks/<topic>/research.md. Not for quick
+  design pattern annotations). Output path is resolved per project convention. Not for quick
   lookups or single-file reads.
-version: 1.0.0
+version: 1.1.0
 allowed-tools:
   - Read
   - Grep
@@ -25,12 +25,20 @@ Documents are written for two audiences: a new team member reading top-to-bottom
 ## Invocation
 
 ```
-arch-doc <topic>
+arch-doc <topic> [output-dir]
 ```
 
-`<topic>` is the feature domain to analyze (e.g. `skill-agent`, `auth`, `chat-runtime`, `file-storage`). Derive the output path as `tasks/<topic>/research.md`. Create the directory if it doesn't exist.
+`<topic>` is the feature domain to analyze (e.g. `skill-agent`, `auth`, `crowdin-sync`).
 
-If `<topic>` is ambiguous or very broad, use `AskUserQuestion` to narrow scope before starting research.
+`[output-dir]` is optional. Resolve the output path with this priority:
+
+1. **Explicit in prompt** — user wrote a path (e.g. `arch-doc approval doc/arch/`): use `<output-dir>/<topic>.md`.
+2. **CLAUDE.md convention** — scan the nearest CLAUDE.md files in context for a line matching `arch-doc` and an output directory (e.g. `arch-doc 输出目录：doc/arch/`): use that directory.
+3. **Ask** — neither of the above applies: use `AskUserQuestion` to ask the user where to write the document. Suggest project-appropriate options based on existing `doc/` structure if present.
+
+Create the directory if it doesn't exist.
+
+If `<topic>` is ambiguous or very broad, use `AskUserQuestion` to narrow scope before resolving the path.
 
 ---
 
@@ -91,7 +99,7 @@ Report: the end-to-end flow when a user action triggers domain logic. Trace: tri
 
 ## Phase 2: Synthesize & Write
 
-Merge the four research outputs into a single document. Write directly to `tasks/<topic>/research.md`.
+Merge the four research outputs into a single document. Write to `<resolved-output-dir>/<topic>.md` (path resolved in the Invocation section above).
 
 ### Document Structure
 
@@ -229,7 +237,7 @@ Before writing the final file, verify:
 
 ## Output
 
-Write the completed document to `tasks/<topic>/research.md`.
+Write the completed document to `<resolved-output-dir>/<topic>.md`.
 
 End with a one-line summary in chat: document path, section count, and the 2-3 most architecturally significant findings from the research.
 
