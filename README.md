@@ -21,13 +21,15 @@ Analyze any feature domain across all architectural layers and generate a struct
 
 ### refine
 
-Process `<!-- annotation -->` blocks in any Markdown document and apply targeted edits — without rewriting from scratch.
+Process `<!-- TAG: note -->` annotations in any Markdown document and apply targeted edits — without rewriting from scratch.
 
-- [x] Scans all annotations and classifies them (add-content / fix / layout / restructure / clarify / terminology)
+- [x] Supports 6 tags: `ADD`, `FIX`, `DEL`, `ASK`, `SPLIT`, `TERM` — untagged annotations auto-classified
+- [x] `ASK` tag pauses for user confirmation before editing
 - [x] Decides per annotation whether codebase reads are needed
 - [x] Processes annotations one by one, removes each after handling
-- [x] Updates document version number and date automatically
+- [x] Bumps document version and date automatically
 - [x] Works on any Markdown file: architecture docs, task plans, workflow docs, research notes
+- [x] Includes a [usage guide](refine/USAGE.md)
 
 ---
 

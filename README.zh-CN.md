@@ -21,13 +21,15 @@
 
 ### refine
 
-处理任意 Markdown 文档中的 `<!-- 批注 -->` 并定向修改，无需从头重写。
+处理任意 Markdown 文档中的 `<!-- TAG: 批注 -->` 并定向修改，无需从头重写。
 
-- [x] 扫描所有批注并分类（add-content / fix / layout / restructure / clarify / terminology）
+- [x] 支持 6 种标签：`ADD`、`FIX`、`DEL`、`ASK`、`SPLIT`、`TERM`，无标签时自动分类
+- [x] `ASK` 标签会暂停并询问用户确认后再修改
 - [x] 按批注类型判断是否需要读代码库
 - [x] 逐条处理，每条处理完后删除批注
 - [x] 自动更新文档版本号和日期
 - [x] 适用于任何 Markdown 文件：架构文档、任务计划、工作流文档、研究笔记等
+- [x] 包含[使用说明](refine/USAGE.zh-CN.md)
 
 ---
 
